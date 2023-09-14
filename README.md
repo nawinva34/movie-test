@@ -1,3 +1,6 @@
+เริ่มด้วยการ Clone code และเมื่อเปิด Project แล้ว Run npm install ใน Terminal และหลังจากนั้นให้ Run Project ด้วยคำสั่ง npm start
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
