@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { Card, Col, Row, Input, Modal, Button, InputNumber } from 'antd'
 import axios from 'axios'
 
-const MovieGrid = () => {
+const MovieGrid = ({cart, setCart }) => {
   const [data, setData] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([])
+  // const [cart, setCart] = useState([])
   const [selectedMovie, setSelectedMovie] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [moviePrice, setMoviePrice] = useState(0)
 
-  console.log('data', data)
-  console.log(moviePrice)
+  console.log("cart",cart)
 
   useEffect(() => {
     axios
@@ -40,16 +40,22 @@ const MovieGrid = () => {
   }
 
   const handleSavePrice = () => {
-    // Find the index of the selected movie in the data array
-    const index = data.findIndex((movie) => movie.id === selectedMovie.id)
+    const index = data.findIndex((movie) => movie.id === selectedMovie.id);
     if (index !== -1) {
-      // Clone the data array and update the price of the selected movie
-      const updatedData = [...data]
-      updatedData[index] = { ...selectedMovie, price: moviePrice }
-      setData(updatedData)
+      const updatedData = [...data];
+      updatedData[index] = { ...selectedMovie, price: moviePrice };
+      setData(updatedData);
+      setSelectedMovie(updatedData[index]);
     }
-    setModalVisible(false)
-  }
+  };
+
+  const addToCart = () => {
+    if (selectedMovie) {
+      setCart([...cart, selectedMovie]);
+    }
+  };
+  
+  
 
   return (
     <div>
@@ -87,7 +93,7 @@ const MovieGrid = () => {
         footer={null}
         width={1000}
       >
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+        <div className="grid grid-cols-2">
           <div>
             <img
               alt={selectedMovie ? selectedMovie.title : ''}
@@ -107,14 +113,21 @@ const MovieGrid = () => {
                 <p className="text-base">{selectedMovie.release_date}</p>
                 <div className="absolute bottom-5">
                   <p className="text-lg font-bold pb-1">
-                    Price {selectedMovie.price ? selectedMovie.price : "0"} $
+                    Price {selectedMovie.price ? selectedMovie.price : '0'} $
                   </p>
                   <InputNumber
                     placeholder="Enter the price"
                     value={moviePrice}
                     onChange={(value) => setMoviePrice(value)}
                   />
-                  <Button type='primary' danger onClick={handleSavePrice}>Save Price</Button>
+                  <Button type="primary" danger onClick={handleSavePrice}>
+                    Save Price
+                  </Button>
+                </div>
+                <div className='absolute bottom-5 right-7'>
+                  <Button type="primary" style={{ backgroundColor: '#33C1FF' }} onClick={addToCart}>
+                    Add to cart
+                  </Button>
                 </div>
               </div>
             )}
