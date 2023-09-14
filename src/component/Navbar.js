@@ -5,7 +5,7 @@ import { ShoppingCartOutlined, QrcodeOutlined } from '@ant-design/icons'
 const Navbar = ({ cart, setCart }) => {
   const [isCartModalVisible, setIsCartModalVisible] = useState(false);
   const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(60); // Initial time in seconds
+  const [remainingTime, setRemainingTime] = useState(60); 
 
 
   const itemCount = cart.length
